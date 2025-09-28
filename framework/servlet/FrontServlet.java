@@ -2,10 +2,10 @@ package framework.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 
-
-@WebMappi
+@WebServlet("/*")
 public class FrontServlet extends HttpServlet {
 
     @Override
@@ -19,5 +19,4 @@ public class FrontServlet extends HttpServlet {
         resp.setContentType("text/html");
         resp.getWriter().write("<h1>Vous essayez d'acceder a : " + urlPath + "</h1>");
     }
-    
 }
