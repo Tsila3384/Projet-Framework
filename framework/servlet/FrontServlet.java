@@ -2,9 +2,11 @@ package framework.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.InputStream;
 
+@WebServlet("/*")
 public class FrontServlet extends HttpServlet {
 
     @Override
