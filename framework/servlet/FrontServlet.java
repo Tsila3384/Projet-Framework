@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
+import java.io.InputStream;
 
 @WebServlet("/*")
 public class FrontServlet extends HttpServlet {
@@ -13,10 +14,15 @@ public class FrontServlet extends HttpServlet {
             throws ServletException, IOException {
        
         String urlPath = req.getRequestURI();
-    
-        System.out.println("Vous essayez d'acceder a : " + urlPath);
-    
-        resp.setContentType("text/html");
-        resp.getWriter().write("<h1>Vous essayez d'acceder a : " + urlPath + "</h1>");
+        InputStream resource = getServletContext().getResourceAsStream(urlPath);
+        
+        if (resource != null) {
+            resource.transferTo(resp.getOutputStream());
+            resource.close();
+        } else {
+            System.out.println("Vous essayez d'acceder a : " + urlPath);
+            resp.setContentType("text/html");
+            resp.getWriter().write("<h1>Vous essayez d'acceder a : " + urlPath + "</h1>");
+        }
     }
 }
