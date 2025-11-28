@@ -1,5 +1,4 @@
 package com.tsila.servlet;
-
 import com.tsila.annotations.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -159,21 +158,47 @@ public class FrontServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = req.getPathInfo();
-        resp.setContentType("text/plain");
-        PrintWriter out = resp.getWriter();
 
         if (path == null) {
-            out.println("Aucune URL fournie");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Aucune URL fourniesssssssssssssssss");
             return;
         }
 
         Method method = urlMappings.get(path);
         if (method == null) {
-            out.println("Aucune méthode correspondante pour " + path);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Aucuneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee méthode correspondante pour " + path);
+            return;
+        }
+
+        try {
+            // NOUVEAU : Instanciation du contrôleur
+            Class<?> controllerClass = controllerMappings.get(path);
+            Object controllerInstance = controllerClass.getDeclaredConstructor().newInstance();
+
+            // NOUVEAU : Exécution de la méthode
+            Object result = method.invoke(controllerInstance);
+
+            // NOUVEAU : Gestion du résultat
+            handleMethodResult(result, req, resp);
+
+        } catch (Exception e) {
+            throw new ServletException("Erreur lors de l'exécution de la méthode pour " + path, e);
+        }
+    }
+
+    // CETTE MÉTHODE DOIT ÊTRE EN DEHORS DE doGet, à la racine de la classe
+    private void handleMethodResult(Object result, HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+
+        resp.setContentType("text/plain;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+
+        if (result == null) {
+            out.println("Méthode exécutée avec succès (retour null)");
+        } else if (result instanceof String) {
+            out.print(result);
         } else {
-            Class<?> controller = controllerMappings.get(path);
-            out.println("Classe: " + controller.getName());
-            out.println("Méthode: " + method.getName());
+            out.print(result.toString());
         }
     }
 }
