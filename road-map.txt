@@ -1,0 +1,61 @@
+Sprint 1:
+- si la ressource demandée dans l'URL (.jsp, …) existe, on redirige, sinon on affiche le lien.
+	Exemple: /login: on affiche "/login"
+		 /index.jsp: si existe on redirige vers la page sinon on affiche "/index.jsp"
+
+Sprint 2:
+Objectif: connaître tous les URLs dans le projet développeur
+- créer une annotation pour recevoir les URLs avec comme paramètre un URL
+- tester dans un void main ou un projet web
+
+Srpint 3:
+Objectif: connaître si un URL est mappé à une méthode
+- créer un ContextInitializer qui va scanner le projet au démarrage
+- récupérer toutes les classes annotées @annotation1 puis les méthodes annotées @annotation2
+- lorsqu'on tape un URL, on vérifie si il est mappé à une des méthodes
+- azo ajanona ao anaty méthode init()
+
+Sprint 4:
+Objectifs:  - exécuter/invoquer les classes et méthodes associées à l'URL
+			- vérifier si la valeur de retour est une chaîne de caractère, si oui, afficher dans une page
+
+Sprint 4 bis:
+Objectif: Implémenter et utiliser la classe ModelView
+- créer une classe dans le framework 'ModelView' 
+- mettre un attribut String view, 
+- créer une méthode qui retourne un objet ModelView associé à un URL
+- y créer une instance de MV puis mv.setView(test.jsp)
+- dans FrontServlet, invoquer, tester la valeur de retour, si String print writter, si ModelView [...] utiliser
+dispatcher et afficher la page
+
+Sprint 5:
+Objectif: Envoyer des attributs à travers ModelView vers une page jsp
+
+Sprint 3-ter:
+Exemple dans une page de détail d'étudiant.
+URL: /etudiant/{id}
+Dans EtudiantController: 
+	- @url("/etudiant/{id}")
+	get(int id) {
+		return "tonga ato"
+	}
+	- tsy mila alaina aloha ilay valeur an'ilay variable
+
+Sprint 6:
+	- raha mitovy anarana ny param URL si attribut méthode dia afficher-na ilay valeur
+
+Sprint 6-bis:
+	- utiliser RequestParam comme dans SpringMVC pour attribuer à l'argument la valeur du paramètre dans l'URL
+
+Sprint 7:
+Objectif:
+	- Séparer le méthodes des requêtes HTTP
+	- méthode d'action (dans le controller) associé à un URL GET ou POST
+	- se renseigner sur Get/PostMapping et RequestMapping
+
+Sprint 8:
+Objectif: 
+	Traiter les données des views vers les controllers
+ Raha ohatra ka misy variable map ao antin'ilay méthode ilay controler ka type <String, Object>, 
+ ohatran'hoe copie an'ilay valeur an'ilay tao anatin'ilay request.getParameter
+ Fenoina ilay argument Map @ alalan'ilay req.getParameter
